@@ -3,6 +3,7 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropou
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import to_categorical
 import keras
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 from tensorflow.keras.utils import to_categorical
@@ -10,6 +11,24 @@ from tensorflow.python.profiler.profiler_client import monitor
 
 import data
 import model
+from tensorflow.keras.callbacks import Callback
+
+
+class WeightHistory(Callback):
+    def __init__(self):
+        super().__init__()
+        self.input_weights = []
+        self.output_weights = []
+
+    def on_epoch_end(self, epoch, logs=None):
+        # Pobieranie wag warstwy wejściowej i wyjściowej
+        input_weights = np.mean(self.model.layers[0].get_weights()[0])
+        output_weights = np.mean(self.model.layers[-1].get_weights()[0])
+
+        self.input_weights.append(input_weights)
+        self.output_weights.append(output_weights)
+
+weight_history = WeightHistory()
 
 x_train, x_test, y_train, y_test = data.datas()
 num_classes = 2
@@ -31,7 +50,7 @@ history = model.fit(
     batch_size=32,
     epochs=50,
     validation_data=(x_test, y_test),
-    callbacks=[stop]
+    callbacks=[stop,weight_history]
 )
 
 
@@ -79,8 +98,15 @@ test_error = 1 - test_accuracy
 print(f"Dokładność na zbiorze treningowym: {train_accuracy:.2f}, Błąd: {train_error:.2f}")
 print(f"Dokładność na zbiorze testowym: {test_accuracy:.2f}, Błąd: {test_error:.2f}")
 
+plt.figure(figsize=(10, 6))
+plt.plot(weight_history.input_weights, label="Wagi warstwy wejściowej")
+plt.plot(weight_history.output_weights, label="Wagi warstwy wyjściowej")
+plt.xlabel("Epoki")
+plt.ylabel("Średnia wartość wag")
+plt.title("Średnia wartość wag w funkcji epok")
+plt.legend()
+plt.show()
 
 
 
-
-model.save('conv.keras')
+model.save('conv4.keras')

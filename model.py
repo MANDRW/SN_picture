@@ -19,7 +19,7 @@ def cmodel(num_classes):
         Dense(num_classes, activation='softmax')  # Warstwa wyjściowa z softmax dla klasyfikacji
     ])
 
-    optimazer = Adam(learning_rate=0.001)
+    optimazer = Adam(learning_rate=0.0001)
     model.compile(optimizer=optimazer, loss='categorical_crossentropy', metrics=['accuracy'])
     model.summary()
     return model

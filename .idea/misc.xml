@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.9 (Sieci_neuronowe_conv)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (Sieci_neuronowe_conv)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="tf2.4" project-jdk-type="Python SDK" />
 </project>
