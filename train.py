@@ -54,7 +54,6 @@ history = model.fit(
 )
 
 
-# Wykres strat (loss)
 plt.plot(history.history['loss'], label='Strata - zbiór treningowy')
 plt.plot(history.history['val_loss'], label='Strata - zbiór walidacyjny')
 plt.xlabel('Epoki')
@@ -63,7 +62,6 @@ plt.title('Strata podczas trenowania')
 plt.legend()
 plt.show()
 
-# Wykres dokładności (accuracy)
 plt.plot(history.history['accuracy'], label='Dokładność - zbiór treningowy')
 plt.plot(history.history['val_accuracy'], label='Dokładność - zbiór walidacyjny')
 plt.xlabel('Epoki')
@@ -72,7 +70,6 @@ plt.title('Dokładność podczas trenowania')
 plt.legend()
 plt.show()
 
-# Wykres błędów klasyfikacji
 train_errors = [1 - acc for acc in history.history['accuracy']]
 val_errors = [1 - acc for acc in history.history['val_accuracy']]
 
@@ -84,11 +81,9 @@ plt.title('Błąd klasyfikacji podczas trenowania')
 plt.legend()
 plt.show()
 
-# Predykcje na zbiorze treningowym i testowym
 y_train_pred = (model.predict(x_train) >= 0.5).astype(int)
 y_test_pred = (model.predict(x_test) >= 0.5).astype(int)
 
-# Obliczenie dokładności i błędów klasyfikacji
 train_accuracy = accuracy_score(y_train, y_train_pred)
 test_accuracy = accuracy_score(y_test, y_test_pred)
 

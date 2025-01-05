@@ -10,14 +10,6 @@ import tensorflow as tf
 import random
 
 def visualize_data(images, labels, num_samples=9):
-    """
-    Wyświetla kilka przykładów obrazów z ich etykietami.
-
-    Args:
-        images (np.ndarray): Tablica obrazów.
-        labels (np.ndarray): Tablica etykiet.
-        num_samples (int): Liczba przykładów do wyświetlenia.
-    """
     plt.figure(figsize=(10, 10))
     for i in range(num_samples):
         plt.subplot(3, 3, i + 1)
